@@ -6,11 +6,16 @@ class PostsController < ApplicationController
   end
 
   def show
+    @post=Post.find(params[:id])
+    @tags = @post.tags
+    @comments = @post.comments
+    @comment = Comment.new
   end
 
   def new
     @post = Post.new
     @tags = @post.tags.new
+    @comment = @post.comments.new
   end
 
   def edit
@@ -42,6 +47,10 @@ class PostsController < ApplicationController
   end
 
   def destroy
+    byebug
+    @post.comments.each do |comment|
+      comment.destroy
+    end
     @post.destroy
     respond_to do |format|
       format.html { redirect_to posts_url }
