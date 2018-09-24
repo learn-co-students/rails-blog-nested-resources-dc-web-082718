@@ -1,6 +1,6 @@
 <p id="notice"><%= notice %></p>
-
 <h3>Title:</h3>
+
 <%= @post.name %>
 <h3>Content:</h3>
 <%= @post.content %>
@@ -10,6 +10,23 @@
   <li><%= tag.name %></li>
   <% end %>
 </ul>
+
+<h3>Comments:</h3>
+<ul>
+  <% @comments.each do |comment| %>
+  <li><%=comment.content %></li>
+  <%end%>
+</ul>
+
+
+<%= form_for(@comment) do |f| %>
+  <%= f.label :content %><br>
+  <%= f.text_area :content, :html => { :id => "Content"} %>
+  <%= f.hidden_field :post_id, :value => @post.id %>
+  <%= f.submit %>
+<% end %>
+
+
 
 <%= link_to 'Edit', edit_post_path(@post) %> |
 <%= link_to 'Back', posts_path %>
